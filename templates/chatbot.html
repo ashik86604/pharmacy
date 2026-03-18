@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+<h3>💊 Pharmacy AI Assistant</h3>
+<p>Ask about tablet uses, dosage, or side effects.</p>
+
+<div class="card shadow">
+<div class="card-body">
+
+<div id="chatBox" style="height:400px; overflow-y:auto;"></div>
+
+<div class="input-group mt-3">
+    <input type="text" id="userInput" class="form-control"
+           placeholder="Ask about a medicine...">
+
+    <div class="input-group-append">
+        <button class="btn btn-primary" onclick="sendMessage()">
+            Send
+        </button>
+    </div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+function addMessage(sender, text){
+
+    let chatBox = document.getElementById("chatBox")
+
+    let msg = document.createElement("div")
+    msg.className = "mb-2"
+
+    msg.innerHTML =
+        "<b>" + sender + ":</b> " + text
+
+    chatBox.appendChild(msg)
+    chatBox.scrollTop = chatBox.scrollHeight
+}
+
+function sendMessage(){
+
+    let input = document.getElementById("userInput")
+    let message = input.value
+
+    if(message.trim() === "") return
+
+    addMessage("You", message)
+
+    input.value = ""
+
+    fetch("/chat_api",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            message: message
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+    addMessage("AI", data.reply)
+
+    let usage = document.createElement("div")
+    usage.style.fontSize = "12px"
+    usage.style.color = "gray"
+
+    usage.innerHTML =
+        "Tokens → Prompt: " + data.prompt_tokens +
+        " | Completion: " + data.completion_tokens +
+        " | Total: " + data.total_tokens
+
+    document.getElementById("chatBox").appendChild(usage)
+
+})
+}
+
+</script>
+
+{% endblock %}

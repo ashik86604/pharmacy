@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Bill Details</h3>
+<hr>
+
+<p><strong>Bill ID:</strong> {{ bill.b_id }}</p>
+<p><strong>Date:</strong> {{ bill.created_at }}</p>
+<p><strong>Phone:</strong> {{ bill.c_phone }}</p>
+
+<table class="table table-bordered mt-3">
+    <thead class="thead-dark">
+        <tr>
+            <th>Medicine</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.price * item.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4 class="text-right">
+    Grand Total: ₹ {{ bill.total_price }}
+</h4>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between mb-3">
+    <h3>Stock Management</h3>
+    <a href="{{ url_for('add_stock') }}" class="btn btn-success">
+        + Add Medicine
+    </a>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Stock</th>
+            <th>Price (₹)</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for med in medicines %}
+        <tr>
+            <td>{{ med.t_id }}</td>
+            <td>{{ med.name }}</td>
+            <td>{{ med.stockno }}</td>
+            <td>{{ med.price }}</td>
+            <td>
+                <a href="{{ url_for('delete_stock', id=med.t_id) }}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('Delete this medicine?')">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

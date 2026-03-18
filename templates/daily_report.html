@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>📊 Daily Sales Report</h2>
+    <hr>
+
+    <form method="POST" class="mb-4">
+        <div class="form-group">
+            <label>Select Date</label>
+            <input type="date" name="date"
+                   class="form-control"
+                   value="{{ selected_date }}">
+        </div>
+        <button class="btn btn-primary mt-2">
+            Filter
+        </button>
+    </form>
+
+    <h5>Total Revenue: ₹ {{ total }}</h5>
+
+    <table class="table table-bordered mt-3">
+        <tr>
+            <th>Bill ID</th>
+            <th>Customer Phone</th>
+            <th>Total Price</th>
+            <th>Date</th>
+        </tr>
+
+        {% for record in records %}
+        <tr>
+            <td>{{ record.b_id }}</td>
+            <td>{{ record.c_phone }}</td>
+            <td>{{ record.total_price }}</td>
+            <td>{{ record.created_at }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    <a href="{{ url_for('export_excel', date=selected_date) }}"
+       class="btn btn-success">
+       📤 Export to Excel
+    </a>
+
+</div>
+
+{% endblock %}

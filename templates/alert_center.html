@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">🔔 Alert Center</h2>
+
+    <!-- OUT OF STOCK -->
+    <div class="card mb-4 shadow">
+        <div class="card-header bg-danger text-white">
+            Out of Stock Medicines
+        </div>
+        <div class="card-body">
+            {% if out_of_stock %}
+                <ul class="list-group">
+                    {% for med in out_of_stock %}
+                        <li class="list-group-item">
+                            {{ med.name }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-success">No medicines are out of stock.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- LOW STOCK -->
+    <div class="card mb-4 shadow">
+        <div class="card-header bg-warning text-dark">
+            Low Stock (Less than 5 units)
+        </div>
+        <div class="card-body">
+            {% if low_stock %}
+                <ul class="list-group">
+                    {% for med in low_stock %}
+                        <li class="list-group-item d-flex justify-content-between">
+                            {{ med.name }}
+                            <span class="badge badge-warning">
+                                {{ med.stockno }} left
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-success">No low stock items.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- EXPIRING SOON -->
+    <div class="card mb-4 shadow">
+        <div class="card-header bg-info text-white">
+            Expiring in Next 30 Days
+        </div>
+        <div class="card-body">
+            {% if expiring_soon %}
+                <ul class="list-group">
+                    {% for med in expiring_soon %}
+                        <li class="list-group-item d-flex justify-content-between">
+                            {{ med.name }}
+                            <span class="badge badge-info">
+                                {{ med.expiry_date }}
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-success">No medicines expiring soon.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- EXPIRED -->
+    <div class="card mb-4 shadow">
+        <div class="card-header bg-dark text-white">
+            Already Expired Medicines
+        </div>
+        <div class="card-body">
+            {% if expired %}
+                <ul class="list-group">
+                    {% for med in expired %}
+                        <li class="list-group-item d-flex justify-content-between">
+                            {{ med.name }}
+                            <span class="badge badge-danger">
+                                {{ med.expiry_date }}
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-success">No expired medicines.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- SALES INSIGHTS -->
+    <div class="row mt-4">
+
+        <div class="col-md-6">
+            <div class="card shadow p-4">
+                <h5>🔥 Top Selling Medicine</h5>
+                <hr>
+                {% if top_selling %}
+                    <p><strong>Name:</strong> {{ top_selling.name }}</p>
+                    <p><strong>Quantity Sold:</strong> {{ top_selling.total_sold }}</p>
+                {% else %}
+                    <p>No sales data available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow p-4">
+                <h5>📉 Least Selling Medicine</h5>
+                <hr>
+                {% if least_selling %}
+                    <p><strong>Name:</strong> {{ least_selling.name }}</p>
+                    <p><strong>Quantity Sold:</strong> {{ least_selling.total_sold }}</p>
+                {% else %}
+                    <p>No sales data available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

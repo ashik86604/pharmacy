@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Invoice</h3>
+<hr>
+
+<p><strong>Bill ID:</strong> {{ bill.b_id }}</p>
+<p><strong>Date:</strong> {{ bill.created_at }}</p>
+<p><strong>Customer Phone:</strong> {{ bill.c_phone }}</p>
+
+<table class="table table-bordered mt-3">
+    <thead class="thead-dark">
+        <tr>
+            <th>Medicine</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.price * item.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4 class="text-right">
+    Grand Total: ₹ {{ bill.total_price }}
+</h4>
+
+<button onclick="window.print()" class="btn btn-primary">
+    Print Invoice
+</button>
+<hr>
+
+<form method="POST" action="{{ url_for('email_invoice', bill_id=bill.b_id) }}">
+
+    <div class="form-group">
+        <label>Enter Email to Send Invoice</label>
+        <input type="email" name="email"
+               class="form-control"
+               placeholder="example@gmail.com"
+               required>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2">
+        Email Invoice
+    </button>
+
+</form>
+
+{% endblock %}

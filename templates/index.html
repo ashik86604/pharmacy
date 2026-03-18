@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid p-0">
+
+    <!-- HERO SECTION -->
+    <div class="jumbotron text-white text-center mb-0"
+         style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('https://images.unsplash.com/photo-1580281657521-5b3e8b61c7b4');
+                background-size: cover;
+                background-position: center;
+                height: 350px;">
+
+        <div class="container h-100 d-flex flex-column justify-content-center">
+            <h1 class="display-4 font-weight-bold">
+                Pharmacy Management System
+            </h1>
+            <p class="lead">
+                Secure • Smart • Efficient Inventory & Billing ERP
+            </p>
+        </div>
+    </div>
+
+    <!-- LOGIN OPTIONS -->
+    <div class="container mt-5 mb-5">
+
+        <div class="row">
+
+            <!-- ADMIN LOGIN CARD -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-lg h-100">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d"
+                         class="card-img-top"
+                         style="height: 250px; object-fit: cover;">
+
+                    <div class="card-body text-center">
+                        <h4 class="card-title">Admin Login</h4>
+                        <p class="card-text">
+                            Manage stock, generate bills, and handle daily pharmacy operations.
+                        </p>
+                        <a href="{{ url_for('login') }}"
+                           class="btn btn-primary btn-lg btn-block">
+                           Login as Admin
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUPER ADMIN LOGIN CARD -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-lg h-100">
+                    <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5"
+                         class="card-img-top"
+                         style="height: 250px; object-fit: cover;">
+
+                    <div class="card-body text-center">
+                        <h4 class="card-title">Super Admin Login</h4>
+                        <p class="card-text">
+                            Monitor analytics, manage admins, profits, and system alerts.
+                        </p>
+                        <a href="{{ url_for('super_login') }}"
+                           class="btn btn-danger btn-lg btn-block">
+                           Login as Super Admin
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-4">Welcome, {{ session.get('admin') }}</h3>
+
+<div class="row">
+
+    <!-- Total Medicines -->
+    <div class="col-md-4">
+        <div class="card text-white bg-info shadow">
+            <div class="card-body text-center">
+                <h5>Total Medicines</h5>
+                <h2>{{ total_medicines }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Bills -->
+    <div class="col-md-4">
+        <div class="card text-white bg-success shadow">
+            <div class="card-body text-center">
+                <h5>Total Bills</h5>
+                <h2>{{ total_bills }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Sales -->
+    <div class="col-md-4">
+        <div class="card text-white bg-primary shadow">
+            <div class="card-body text-center">
+                <h5>Total Sales</h5>
+                <h2>₹ {{ total_sales }}</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

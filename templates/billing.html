@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Create Bill</h3>
+<hr>
+
+<form method="POST">
+
+    <div class="form-group">
+        <label>Customer Phone</label>
+        <input type="text" name="phone" class="form-control" required>
+    </div>
+
+    <table class="table table-bordered" id="billTable">
+        <thead class="thead-dark">
+            <tr>
+                <th>Medicine</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-info" onclick="addRow()">
+        + Add Medicine
+    </button>
+
+    <hr>
+
+    <div class="form-group">
+        <label>Total Price</label>
+        <input type="number" id="total_price" name="total_price"
+               class="form-control" readonly required>
+    </div>
+
+    <button class="btn btn-success">Generate Bill</button>
+
+</form>
+<script type="application/json" id="medicine-data">
+    {{ medicines|tojson|safe }}
+</script>
+<script>
+    const medicines = JSON.parse(
+    document.getElementById("medicine-data").textContent);
+// const medicines = {{ medicines|default([])|tojson|safe }};
+// const medicines = {{ medicines|default([])|tojson|safe }};
+function addRow() {
+
+    let table = document.querySelector("#billTable tbody");
+    let row = document.createElement("tr");
+
+    let medicineOptions = "";
+    medicines.forEach(med => {
+        medicineOptions += `<option value="${med.t_id}" data-price="${med.price}">
+                                ${med.name}
+                            </option>`;
+    });
+
+    row.innerHTML = `
+        <td>
+            <select name="medicine_id" class="form-control"
+                onchange="updatePrice(this)">
+                ${medicineOptions}
+            </select>
+        </td>
+
+        <td>
+            <input type="number" class="form-control price" readonly>
+        </td>
+
+        <td>
+            <input type="number" name="quantity"
+                class="form-control quantity"
+                value="1"
+                onchange="calculateTotal()">
+        </td>
+
+        <td>
+            <button type="button" class="btn btn-danger"
+                onclick="removeRow(this)">X</button>
+        </td>
+    `;
+
+    table.appendChild(row);
+    updatePrice(row.querySelector("select"));
+}
+
+function updatePrice(select) {
+    let price = select.options[select.selectedIndex].dataset.price;
+    select.closest("tr").querySelector(".price").value = price;
+    calculateTotal();
+}
+
+function removeRow(btn) {
+    btn.closest("tr").remove();
+    calculateTotal();
+}
+
+function calculateTotal() {
+    let prices = document.querySelectorAll(".price");
+    let quantities = document.querySelectorAll(".quantity");
+    let total = 0;
+
+    for (let i = 0; i < prices.length; i++) {
+        total += prices[i].value * quantities[i].value;
+    }
+
+    document.getElementById("total_price").value = total;
+}
+</script>
+
+{% endblock %}

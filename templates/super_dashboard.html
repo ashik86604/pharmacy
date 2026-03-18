@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Super Admin Dashboard</h2>
+<a href="{{ url_for('logout') }}" class="btn btn-light btn-sm">
+            Logout
+        </a>
+    <!-- ROW 1 -->
+    <div class="row">
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow p-3 text-center">
+                <h6>Total Revenue</h6>
+                <h3 class="text-success">₹ {{ total_revenue }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow p-3 text-center">
+                <h6>Total Profit</h6>
+                <h3 class="text-primary">₹ {{ total_profit }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow p-3 text-center">
+                <h6>Total Bills</h6>
+                <h3>{{ total_bills }}</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ROW 2 -->
+    <div class="row">
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow p-3 text-center">
+                <h6>Total Admins</h6>
+                <h3>{{ total_admins }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow p-3 text-center">
+                <h6>Low Stock Items</h6>
+                <h3 class="text-warning">{{ low_stock_count }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow p-3 text-center">
+                <h6>Expiring Soon (30 Days)</h6>
+                <h3 class="text-danger">{{ expiring_count }}</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ROW 3 -->
+    <div class="row">
+
+        <div class="col-md-6 mb-4">
+            <div class="card shadow p-4">
+                <h5>Top Selling Medicine</h5>
+                <hr>
+                <p><strong>Name:</strong> {{ top_medicine.name }}</p>
+                <p><strong>Quantity Sold:</strong> {{ top_medicine.total_sold }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card shadow p-4 text-center">
+                <h5>Admin Controls</h5>
+                <hr>
+                <a href="{{ url_for('add_admin') }}"
+                   class="btn btn-success mb-2 w-100">
+                   + Add Admin
+                </a>
+
+                <a href="{{ url_for('manage_admins') }}"
+                   class="btn btn-primary w-100">
+                   Manage Admins
+                </a>
+                <a href="{{ url_for('alert_center') }}"
+                class="btn btn-danger mt-3">
+                🔔 View Alert Center
+                </a>
+                <a href="{{ url_for('daily_report') }}"
+   class="btn btn-dark mt-2">
+   📊 Daily Sales Report
+</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
